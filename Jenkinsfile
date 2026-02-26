@@ -15,9 +15,9 @@ pipeline {
 
         stage('Setup Environment') {
             steps {
-                sh '''
-                    python3 -m venv ${PYTHON_ENV}
-                    . ${PYTHON_ENV}/bin/activate
+                bat '''
+                    python -m venv %PYTHON_ENV%
+                    call %PYTHON_ENV%\\Scripts\\activate
                     pip install --upgrade pip
                     pip install -r requirements.txt
                 '''
@@ -26,9 +26,9 @@ pipeline {
 
         stage('Train Model') {
             steps {
-                sh '''
-                    . ${PYTHON_ENV}/bin/activate
-                    python3 src/train_sklearn.py
+                bat '''
+                    call %PYTHON_ENV%\\Scripts\\activate
+                    python src\\train_sklearn.py
                 '''
             }
         }
